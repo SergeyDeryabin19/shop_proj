@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!yuz!muxuzof%p4sg0q7af*u1u1m^2(8ifrfg)#a!71aikpnyt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['SergeyDeryabin.pythonanywhere.com']
 
 
 # Application definition
@@ -116,6 +116,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = '/home/SergeyDeryabin/static'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = '/home/SergeyDeryabin/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
