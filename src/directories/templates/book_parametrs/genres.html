@@ -19,9 +19,9 @@
             <tbody>
               {% for object in objects %}
                 <tr>
-                  <td style="border: 1px solid black;">{{ object.pk }}</td>
-                  <td style="border: 1px solid black;">{{ object.name }}</td>
-                  <td style="border: 1px solid black;">{{ object.description }}</td>
+                  <td style="border: 1px solid black;text-align: center;">{{ object.pk }}</td>
+                  <td style="border: 1px solid black;text-align: center;">{{ object.name }}</td>
+                  <td style="border: 1px solid black;text-align: center;">{{ object.description }}</td>
                 </tr>
               {% empty %}
                 <tr>
