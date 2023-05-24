@@ -21,4 +21,7 @@ from directories import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('genres.html', views.genres_vew),
+    path('author.html', views.author_vew),
+    path('series.html', views.series_vew),
+    path('publishing.html', views.publishing_vew),
 ]
