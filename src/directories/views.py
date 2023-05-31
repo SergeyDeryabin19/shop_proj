@@ -37,3 +37,15 @@ def publishing_vew(request):
         template_name = "book_parametrs/publishing.html", 
         context={'objects': publishing}
         )
+    
+def add_genre(request):
+    genre_name = request.POST.get("genre name")
+    genre_description = request.POST.get("genre description")
+    print(genre_name)
+    print(genre_description)
+    new_genre = models.Genres.objects.create(name=genre_name, description=genre_description)
+    return render(
+        request, 
+        template_name = "book_parametrs/add_genre.html", 
+        context={}
+    )

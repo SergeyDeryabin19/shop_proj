@@ -61,3 +61,5 @@ class Publishing(models.Model):
         null=True,
         blank=True        
     )    
+
+    

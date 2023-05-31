@@ -24,4 +24,5 @@ urlpatterns = [
     path('author.html', views.author_vew),
     path('series.html', views.series_vew),
     path('publishing.html', views.publishing_vew),
+    path('add_genre.html', views.add_genre),
 ]
