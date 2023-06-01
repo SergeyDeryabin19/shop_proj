@@ -20,9 +20,15 @@ from directories import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('genres.html', views.genres_vew),
-    path('author.html', views.author_vew),
-    path('series.html', views.series_vew),
-    path('publishing.html', views.publishing_vew),
     path('add_genre.html', views.add_genre),
+    
+    path('author.html', views.AuthorListView.as_view()),
+    
+    path('series.html', views.series_vew),
+    
+    path('publishing.html', views.publishing_vew),
+    
+    
 ]

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import models
-
+from django.views.generic.list import ListView
+from django.views import generic
 # Create your views here.
 
 def genres_vew(request):
@@ -12,13 +13,18 @@ def genres_vew(request):
         )
 
 
-def author_vew(request):
-    authors = models.Author.objects.all()  
-    return render(
-        request, 
-        template_name = "book_parametrs/author.html", 
-        context={'objects': authors}
-        )
+# def author_vew(request):
+#     authors = models.Author.objects.all()  
+#     return render(
+#         request, 
+#         template_name = "book_parametrs/author.html", 
+#         context={'objects': authors}
+#         )
+    
+class AuthorListView(generic.ListView):
+    model = models.Author
+    template_name = "book_parametrs/author.html"
+
 
 
 def series_vew(request):
