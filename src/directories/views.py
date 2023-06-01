@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from . import models
-from .forms import AddGenreForm
 
 # Create your views here.
 
@@ -51,13 +50,4 @@ def add_genre(request):
         context={}
     )
 
-def add_genre_forms(request):
-    if request.method == "POST":
-        form = AddGenreForm(request.POST)
-        if form.is_valid():
-            # сохранение объекта модели
-            return redirect("genres.html")
-    else:
-        form = AddGenreForm()
-    return render(request, "book_parametrs/add_genre_forms.html", {"form": form})
 
