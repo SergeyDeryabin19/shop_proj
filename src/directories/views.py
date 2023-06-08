@@ -115,6 +115,10 @@ class PublishingDeleteView(generic.DeleteView):
 
 class HomePage(generic.TemplateView):
     template_name = "book_parametrs/home_page.html"
+    
+
+class Oh_no_problem(generic.TemplateView):
+    template_name = "oh_no_problem.html"
 
 
 def success_page(request):

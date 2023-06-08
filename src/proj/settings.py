@@ -68,6 +68,12 @@ TEMPLATES = [
     },
 ]
 
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
+
 WSGI_APPLICATION = 'proj.wsgi.application'
 
 
@@ -117,9 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/home/SergeyDeryabin/static'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = '/home/SergeyDeryabin/media'
+STATIC_ROOT ='src/static'
+# STATIC_ROOT = '/home/SergeyDeryabin/static'
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = '/home/SergeyDeryabin/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
