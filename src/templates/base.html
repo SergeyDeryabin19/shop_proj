@@ -100,8 +100,13 @@
         width: 70%;
         margin-left: 25%;
         text-align: center;
+     
         
-        
+    }
+
+    table {
+      text-align: center;
+      margin-left: 30%;
     }
     nav {
       width: 25%;
@@ -227,35 +232,35 @@
           </a>
         </li>
         <li>
-          <a href="{% url 'view_author.html' %}" class="nav-link text-white">
+          <a href="{% url 'directories:view_author.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
             Authors
           </a>
         </li>
         <li>
-          <a href="{% url 'view_genres.html' %}" class="nav-link text-white">
+          <a href="{% url 'directories:view_genres.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Genres
           </a>
         </li>
         <li>
-          <a href="{% url 'view_series.html' %}" class="nav-link text-white">
+          <a href="{% url 'directories:view_series.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
             Series
           </a>
         </li>
         <li>
-          <a href="{% url 'view_publishing.html' %}" class="nav-link text-white">
+          <a href="{% url 'directories:view_publishing.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
             Publishing
           </a>
         </li>
-        {% comment %} <li>
-          <a href="{% url 'login.html' %}" class="nav-link text-white">
+        <li>
+          <a href="{% url 'staff:login.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Login
           </a>
-        </li> {% endcomment %}
+        </li>
       </ul>
       <hr>
       <div class="dropdown">
@@ -273,7 +278,7 @@
       </div>
     </div>
     
-    <div class="b-example-divider b-example-vr"></div>
+    <div class="b-example-divider b-example-vr" style='width: 0'></div>
     
     </div>
     <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

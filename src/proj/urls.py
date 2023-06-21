@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from directories import views
 from directories import urls
+from django.conf import settings 
+from django.conf.urls.static import static
 
 
 
@@ -26,9 +28,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view()),
     path('directories/', include('directories.urls'), name='directories'),
+    path('book/', include('book.urls'), name='book'),
     path('staff/', include('staff.urls'), name='staff'),
     path('success', views.success_page, name='success.html'),
     path('oh_no_problem', views.Oh_no_problem.as_view(), name='oh_no_problem.html'),
+    
   
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

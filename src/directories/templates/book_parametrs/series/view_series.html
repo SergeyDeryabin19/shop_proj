@@ -2,7 +2,7 @@
 
 {% block body %}
   <h1>Hi all, there is a list of all series</h1>
-  <div> Чтобы добавить автора жамите   <a href="{% url 'add_series.html' %}">Add series</a>
+  <div> Чтобы добавить автора жамите   <a href="{% url 'directories:add_series.html' %}">Add series</a>
   </div>
   <table>
     <thead>
@@ -18,8 +18,8 @@
           <td>{{ object.series_name }}</td>
           <td>{{ object.series_description }}</td>
           <td>
-            <a href="{% url 'edit_series.html' pk=object.pk %}">Edit</a>
-            <a href="{% url 'delete_series.html' pk=object.pk %}">Delete</a>
+            <a href="{% url 'directories:edit_series.html' pk=object.pk %}">Edit</a>
+            <a href="{% url 'directories:delete_series.html' pk=object.pk %}">Delete</a>
           </td>
         </tr>
       {% endfor %}

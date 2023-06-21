@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'directories',
-    'staff'
+    'staff',
+    'book'
 ]
 
 MIDDLEWARE = [
@@ -124,10 +125,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT ='/home/SergeyDeryabin/static'
-# STATIC_ROOT = '/home/SergeyDeryabin/static'
-# MEDIA_URL = 'media/'
+# STATIC_ROOT ='/home/SergeyDeryabin/static'
+MEDIA_URL = 'media/'
 # MEDIA_ROOT = '/home/SergeyDeryabin/media'
+MEDIA_ROOT = local_settings.MEDIA_ROOT
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -21,4 +21,4 @@ class SignUpView(CreateView):
     model = User
     template_name = 'auntification/signup.html'
     fields = ['username', 'email', 'password']
-    success_url = reverse_lazy('book_parametrs/home_page.html')
+    success_url = reverse_lazy('directories:success.html')

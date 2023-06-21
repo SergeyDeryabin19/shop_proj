@@ -1,7 +1,7 @@
 from django.urls import path
 from directories import views
 
-
+app_name = 'directories'
 urlpatterns = [
     
     #Author

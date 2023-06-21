@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>Hi all, there is a list of all authors</h1>
+  <div> Чтобы добавить автора жамите   
+  </div>
+  <table>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object.title }}</td>
+          <td><img src="{{ object.cover_image.url }}" alt=""></td>
+          <td>{{ object.price }}</td>
+          <td>{{ object.authors }}</td>
+          <td>{{ object.series }}</td>
+          <td>{{ object.genres }}</td>
+          <td>{{ object.publication_year }}</td>
+          <td>{{ object.pages }}</td>
+          <td>{{ object.binding }}</td>
+          <td>{{ object.format }}</td>
+          <td>{{ object.isbn }}</td>
+          <td>{{ object.weight }}</td>
+          <td>{{ object.age_limit }}</td>
+          <td>{{ object.publisher }}</td>
+          <td>{{ object.quantity_available }}</td>
+          <td>{{ object.is_active }}</td>
+          <td>{{ object.rating }}</td>
+          <td>{{ object.date_added }}</td>
+          <td>{{ object.date_updated }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
