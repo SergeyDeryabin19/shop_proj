@@ -98,14 +98,24 @@
     }
     main {
         width: 70%;
-        float: right;
+        margin-left: 25%;
+        text-align: center;
+        
+        
     }
     nav {
-        width: 30%;
-        float: left;
+      width: 25%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
 
+   
 
     }
+      
+
+
   </style>
 
   
@@ -240,6 +250,12 @@
             Publishing
           </a>
         </li>
+        {% comment %} <li>
+          <a href="{% url 'login.html' %}" class="nav-link text-white">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+            Login
+          </a>
+        </li> {% endcomment %}
       </ul>
       <hr>
       <div class="dropdown">

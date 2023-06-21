@@ -20,10 +20,13 @@ from directories import views
 from directories import urls
 
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view()),
-    path('directories/', include('directories.urls')),
+    path('directories/', include('directories.urls'), name='directories'),
+    path('staff/', include('staff.urls'), name='staff'),
     path('success', views.success_page, name='success.html'),
     path('oh_no_problem', views.Oh_no_problem.as_view(), name='oh_no_problem.html'),
   
