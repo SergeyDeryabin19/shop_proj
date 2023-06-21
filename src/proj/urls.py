@@ -16,18 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from directories import views
-from directories import urls
 from django.conf import settings 
 from django.conf.urls.static import static
+from homepage  import views
+
 
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.HomePage.as_view()),
+    path('', views.HomePage.as_view(), name='home'),
     path('directories/', include('directories.urls'), name='directories'),
+    path('hp/', include('homepage.urls'), name='hp'),
     path('book/', include('book.urls'), name='book'),
     path('staff/', include('staff.urls'), name='staff'),
     path('success', views.success_page, name='success.html'),

@@ -227,13 +227,13 @@
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a href="/" class="nav-link active" aria-current="page">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Main Page
           </a>
         </li>
         <li>
           <a href="{% url 'directories:view_author.html' %}" class="nav-link text-white">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Authors
           </a>
         </li>
@@ -245,20 +245,50 @@
         </li>
         <li>
           <a href="{% url 'directories:view_series.html' %}" class="nav-link text-white">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Series
           </a>
         </li>
         <li>
           <a href="{% url 'directories:view_publishing.html' %}" class="nav-link text-white">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Publishing
           </a>
         </li>
-        <li>
+        {% if user.is_authenticated %}
+        {% csrf_token %}
+          <!-- если пользователь авторизован, отображаем значок "Already login" -->
+          <li>
+            <span class="nav-link text-success">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#check2"></use></svg>
+              Already login
+            </span>
+          </li>
+        {% else %}
+          <!-- если пользователь не авторизован, отображаем ссылку "Login" -->
+          <li>
+            <a href="{% url 'staff:login.html' %}" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+              Login
+            </a>
+          </li>
+        {% endif %}
+        {% comment %} <li>
           <a href="{% url 'staff:login.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Login
+          </a>
+        </li> {% endcomment %}
+        <li>
+          <a href="{% url 'staff:logout.html' %}" class="nav-link text-white">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+            Logout
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'staff:signup.html' %}" class="nav-link text-white">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+            Reristration
           </a>
         </li>
       </ul>

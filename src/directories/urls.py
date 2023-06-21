@@ -29,6 +29,5 @@ urlpatterns = [
     path('delete_publishing/<int:pk>', views.PublishingDeleteView.as_view(), name='delete_publishing.html'),
     
     
-    path('success', views.success_page, name='success.html'),
   
 ]
