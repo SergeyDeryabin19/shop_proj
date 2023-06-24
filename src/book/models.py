@@ -154,4 +154,4 @@ class Book(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse_lazy('directories:success-page')
+        return reverse_lazy('hp:success.html')
