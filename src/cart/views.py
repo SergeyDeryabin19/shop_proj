@@ -43,17 +43,21 @@ class CartView(generic.TemplateView):
     
 class CartUpdateView(generic.DetailView):
     model = models.Cart
-    def update_cart(request):
+    template_name = "cart/cart_view.html"
+    def update_cart(request, cart_id, item_id):
         if request.method == 'POST':
-            book_id = request.POST.get('book_id')
-            print(request.POST.get('book_id'))
+            print("1", cart_id)
+            print("2", item_id)
+            cart = models.Cart.objects.get(pk=cart_id)
+            book_id = request.POST.get('item_id')
+            print("3",request.POST.get('item_id'))
             count = int(request.POST.get('count'))
-            print(int(request.POST.get('count')))
-            book = Cart.objects.get(book_id=book_id)
+            print("4", int(request.POST.get('count')))
+            book = cart.books.get(id=book_id)
             book.count = count
             book.save()
 
-        return redirect('cart')
+        return redirect('cart:cart_view')
     
         
         

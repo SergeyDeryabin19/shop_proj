@@ -10,7 +10,7 @@ urlpatterns = [
     # path('book_delete/<int:pk>', views.BookDeleteView.as_view(), name='book_delete.html')
     path('book_add_to_cart/<int:pk>', views.AddBookToCart.as_view(), name='book_add_to_cart.html'),
     path('cart_view', views.CartView.as_view(), name='cart_view'),
-    path('cart/<int:cart_id>/update/<int:item_id>/', views.CartUpdateView.as_view(), name='update_cart'),
+    path('cart/<int:cart_id>/<int:item_id>/', views.CartUpdateView.update_cart, name='update_cart'),
     # path('cart/<int:cart_id>/remove/<int:item_id>/', views.CartView.remove_item, name='remove_item')
     path('order/', views.OrderView.as_view(), name='order'),
     ]

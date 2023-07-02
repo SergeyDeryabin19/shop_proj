@@ -9,6 +9,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Subtotal</th>
+                <th>Book id:</th>
             </tr>
         </thead>
         <tbody>
@@ -26,14 +27,16 @@
             <td>
                 <button type="submit">Update</button>
             </td>
+            <td>{{ book.id }}</td>
             </tr>
             </form>
         {% endfor %}
 
         </tbody>
     </table>
-    <p>Total count:{{ cart.get_total_count_of_cart }} </p>
+    <p>Total count:{{ cart.get_total_count_of_cart }} </p><br>
     <p>Total: {{ cart.get_result_price_of_cart }}</p><br>
+    <p>Cart id: {{ cart.id }} </p>
     <a href="{% url 'cart:order' %}">
     <button type="submit">Go to order</button></a>
     
