@@ -303,6 +303,27 @@
             Add book
           </a>
         </li>
+        {% if user.is_authenticated %}
+        {% csrf_token %}
+          <!-- если пользователь авторизован, отображаем значок "Already login" -->
+          <li>
+            {% comment %} <a href="{% url 'cart_view' cart_id=request.cart_id %}" class="nav-link text-white"> {% endcomment %}
+            {% comment %} <a href="{% url 'cart:cart_view.html' cart_id=request.cart_id %}" class="nav-link text-white"> {% endcomment %}
+            <a href="{% url 'cart:cart_view' %}" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+              Your Cart( Login to start )
+            </a>
+          </li>
+        {% else %}
+          <!-- если пользователь не авторизован, отображаем ссылку "Login" -->
+          <li>
+            {% comment %} <a href="{% url 'cart:cart_view.html' cart_id=request.cart_id %}" class="nav-link text-white"> {% endcomment %}
+            <a href="{% url 'cart:cart_view' %}" class="nav-link text-white">
+              <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+              Your Cart( Login to start )
+            </a>
+          </li>
+        {% endif %}
       </ul>
       <hr>
       <div class="dropdown">

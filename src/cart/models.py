@@ -27,8 +27,9 @@ class BookInCart(models.Model):
 class Cart(models.Model):
     user = models.OneToOneField(
         to=User, 
-        on_delete=models.CASCADE, 
-        unique=True
+        on_delete=models.PROTECT, 
+        null=True,
+        blank=True
         )
     # переменная books вытягивает из модели BookInCart все добавленые книги(книги добавленные в корзину), 
     # для дальнейшего подсчета стоимости корзины
@@ -49,8 +50,9 @@ class Cart(models.Model):
     )
     
     
-    # Сумарная стоимость товарной позиции(одна книга много штук)
-    def get_result_price_of_one_type_book(self):
+    #  Сумарное количество книг в корзине
+    @property
+    def get_result_price_of_cart(self):
         total_price=0
         for book_in_cart in self.books.all():
             price = book_in_cart.book.price
@@ -60,26 +62,29 @@ class Cart(models.Model):
     
     # Подсчет стоимости товарной позиции при изменении количества
     def update_count(self, item_id, count):
-        return ...
+        book_in_cart = self.books.get(id=item_id)
+        book_in_cart.count = count
+        book_in_cart.save()
     
     # Сумарное количество книг в корзине
-    def get_total_count_of_cart(self):
-        total_cart_count = 0
-        for book_in_cart in self.books.all():
-            count = book_in_cart.count
-            total_cart_count += count
-        return total_cart_count
+    # @property
+    # def get_total_count_of_cart(self):
+    #     total_cart_count = 0
+    #     for book_in_cart in self.books.all():
+    #         count = book_in_cart.count
+    #         total_cart_count += count
+    #     return total_cart_count
     
     
     
-    # Стоимость всей корзины
-    def get_cart_price(self):
-        total_cart_price = 0
-        for book_in_cart in self.books.all():
-            book = book_in_cart.book
-            count = book_in_cart.count
-            total_cart_price += book.price * count
-        return total_cart_price
+    # Стоимость одной книги
+    # def get_cart_price(self):
+    #     total_cart_price = 0
+    #     for book_in_cart in self.books.all():
+    #         book = book_in_cart.book
+    #         count = book_in_cart.count
+    #         total_cart_price += book.price * count
+    #     return total_cart_price
     
     # Очищает корзину при оформлении заказа
     def clear_cart(self):

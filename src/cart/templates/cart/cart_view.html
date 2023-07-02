@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Cart</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books_in_cart %}
+            <form action="{% url 'cart:update_cart' cart_id=cart.id item_id=book.id %}" method="POST">
+            {% csrf_token %}
+            <tr>
+            <td>{{ book.book.title }}</td>
+            <td>{{ book.book.price }}</td>
+            <td>
+                <input type="number" name="count" value="{{ book.count }}" min="1">
+            </td>
+            <input type="hidden" name="cart_id" value="{{ cart.id }}">
+            <input type="hidden" name="item_id" value="{{ book.id }}">
+            <td>
+                <button type="submit">Update</button>
+            </td>
+            </tr>
+            </form>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <p>Total count:{{ cart.get_total_count_of_cart }} </p>
+    <p>Total: {{ cart.get_result_price_of_cart }}</p><br>
+    <a href="{% url 'cart:order' %}">
+    <button type="submit">Go to order</button></a>
+    
+{% endblock %}
