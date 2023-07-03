@@ -66,26 +66,6 @@ class Cart(models.Model):
         book_in_cart.count = count
         book_in_cart.save()
     
-    # Сумарное количество книг в корзине
-    # @property
-    # def get_total_count_of_cart(self):
-    #     total_cart_count = 0
-    #     for book_in_cart in self.books.all():
-    #         count = book_in_cart.count
-    #         total_cart_count += count
-    #     return total_cart_count
-    
-    
-    
-    # Стоимость одной книги
-    # def get_cart_price(self):
-    #     total_cart_price = 0
-    #     for book_in_cart in self.books.all():
-    #         book = book_in_cart.book
-    #         count = book_in_cart.count
-    #         total_cart_price += book.price * count
-    #     return total_cart_price
-    
     # Очищает корзину при оформлении заказа
     def clear_cart(self):
         self.books.clear()
@@ -114,24 +94,26 @@ class Cart(models.Model):
 # когда заказали, статус заказа когда был создан заказ
 class Order(models.Model):
     user = models.ForeignKey(
-        to=User,
-        verbose_name="Customer",
-        on_delete=models.CASCADE,
-        blank=False
+        # to=User,
+        # verbose_name="Customer",
+        # on_delete=models.CASCADE,
+        # blank=False
+        to=User, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True
         )
-    delivery_adress = models.TextField(
-        verbose_name="Delivery adress"
-        )
-    cart = models.OneToOneField(
-        to=Cart, 
-        verbose_name="Cart",
-        on_delete=models.CASCADE
+    books = models.ManyToManyField(
+        to=BookInCart,
+        verbose_name="Books in cart",
+        blank=True
         )
            
     price = models.DecimalField(
         max_digits=12, 
         decimal_places=2, 
-        default=0
+        default=0,
+        blank=True
         )
 
     STATUS = (
@@ -142,7 +124,8 @@ class Order(models.Model):
     status = models.CharField(
         max_length=255,
         choices = STATUS,
-        verbose_name="Order status"
+        verbose_name="Order status",
+        blank=True
     )
     created = models.DateTimeField(
         verbose_name="Created",

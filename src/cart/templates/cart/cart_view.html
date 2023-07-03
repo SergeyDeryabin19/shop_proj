@@ -19,17 +19,15 @@
             <tr>
             <td>{{ book.book.title }}</td>
             <td>{{ book.book.price }}</td>
-            <td>
-                <input type="number" name="count" value="{{ book.count }}" min="1">
-            </td>
+            <td><input type="number" name="count" value="{{ book.count }}" min="1"></td>
             <input type="hidden" name="cart_id" value="{{ cart.id }}">
             <input type="hidden" name="item_id" value="{{ book.id }}">
-            <td>
-                <button type="submit">Update</button>
-            </td>
-            <td>{{ book.id }}</td>
-            </tr>
-            </form>
+            <td><button type="submit">Update</button></td></form>
+            <form action="{% url 'cart:delete_book' cart_id=cart.id item_id=book.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="cart_id" value="{{ cart.id }}">
+                <input type="hidden" name="item_id" value="{{ book.id }}">
+            <td><button type="submit">Delete</button></td></tr></form>
         {% endfor %}
 
         </tbody>
@@ -37,7 +35,14 @@
     <p>Total count:{{ cart.get_total_count_of_cart }} </p><br>
     <p>Total: {{ cart.get_result_price_of_cart }}</p><br>
     <p>Cart id: {{ cart.id }} </p>
-    <a href="{% url 'cart:order' %}">
-    <button type="submit">Go to order</button></a>
+    <form action="{% url 'cart:order_view' cart_id=cart.id %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="cart_id" value="{{ cart.id }}">
+    <button type="submit">Submit order</button></form>
+    <form action="{% url 'cart:orders_all' %}" method="GET">
+        {% csrf_token %}
+        <input type="hidden" name="cart_id" value="{{ cart.id }}">
+    <button type="submit">View all orders</button></form>
+    
     
 {% endblock %}

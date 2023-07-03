@@ -8,6 +8,7 @@ from django.views.generic import View
 from . import models
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import request
 
 # Create your views here.
 
@@ -39,13 +40,23 @@ class CartView(generic.TemplateView):
         context["books_in_cart"] = books_in_cart
         return context
     
+    def orders_all(request):
+        order_id=request.session['order_id']
+        print("order id", order_id)
+        user = request.user
+        print("4.1", user)
+        if user.is_anonymous:
+            user=None
+            orders = models.Order.objects.filter(pk=order_id)
+        else: orders = models.Order.objects.filter(user=user)
+        return render(request, 'cart/orders_all.html', {'orders':orders})
     
     
 class CartUpdateView(generic.DetailView):
     model = models.Cart
     template_name = "cart/cart_view.html"
     def update_cart(request, cart_id, item_id):
-        if request.method == 'POST':
+        # if request.method == 'POST':
             print("1", cart_id)
             print("2", item_id)
             cart = models.Cart.objects.get(pk=cart_id)
@@ -56,23 +67,53 @@ class CartUpdateView(generic.DetailView):
             book = cart.books.get(id=book_id)
             book.count = count
             book.save()
-
+        # return redirect('cart:cart_view')
+            return redirect('cart:cart_view')
+    
+    def delete_book(request, cart_id, item_id):
+        cart = models.Cart.objects.get(pk=cart_id)
+        print("2,1", cart)
+        item = cart.books.get(id=item_id)
+        print("2,2", item)
+        item.delete()
         return redirect('cart:cart_view')
     
-        
-        
+    def create_order(self, cart_id):
+        order_id = self.session.get('order_id')
+        print(order_id)
+        cart = models.Cart.objects.get(pk=cart_id)
+        order = models.Order.objects.create(user=None, price=cart.get_result_price_of_cart)
+        for book_in_cart in cart.books.all():
+                print(book_in_cart.book.title)
+                print(book_in_cart.count)
+                order.books.add(book_in_cart)
+                cart.clear_cart()
+        self.session['order_id'] = order.pk
+        print("order id", self.session['order_id'])
+        # print("3.1", models.Cart.objects.get(pk=cart_id))
+        # order = models.Order.objects.get_or_create(
+        #     cart = models.Cart.objects.get(pk=cart_id),
+        #     user=cart.user, 
+        #     price=cart.get_result_price_of_cart)
+        # # cart.clear_cart()
+        # print(order[0].pk)
+        # self.session['order_id'] = order[0].pk
+        # print(self.session['order_id'])
+        # cart.clear_cart()
+        # self.session.pop('cart_id', None)
+        return redirect('cart:cart_view')
+    
+    
+    
 
     
-    # @property
-    # def total_price(self):
-    #     total_price = 0
-    #     for item_in_cart in self.items.all():
-    #         total_price += item_in_cart.price
-    #     return total_price
 
+    
     
 class AddBookToCart(generic.DetailView):
     def get(self, request, *args, **kwargs):
+        order_id = request.session.get('order_id')
+        print(order_id)
         pk = self.request.session.get("cart_id")
         print(self.request.session.get("cart_id"))
         user = self.request.user
@@ -112,7 +153,11 @@ class AddBookToCart(generic.DetailView):
 
 class OrderView(generic.ListView):
     model = models.Order
-    template_name = "cart/order_view.html"
+    template_name = "cart:order_view"
+    def create_order(self, request, cart_id):
+        cart = models.Cart.objects.get(pk=cart_id)
+        order = models.Order.objects.create(user=cart.user, total_price=cart.get_total_price())
+        return redirect("cart:order_view")
 
 
 
