@@ -46,9 +46,13 @@ class CartView(generic.TemplateView):
         user = request.user
         print("4.1", user)
         if user.is_anonymous:
+            print("anonimus part orders all")
             user=None
             orders = models.Order.objects.filter(pk=order_id)
-        else: orders = models.Order.objects.filter(user=user)
+        else: 
+            print("auth order view")
+            orders = models.Order.objects.filter(user=user)
+            print(orders)
         return render(request, 'cart/orders_all.html', {'orders':orders})
     
     
@@ -82,7 +86,13 @@ class CartUpdateView(generic.DetailView):
         order_id = self.session.get('order_id')
         print(order_id)
         cart = models.Cart.objects.get(pk=cart_id)
-        order = models.Order.objects.create(user=None, price=cart.get_result_price_of_cart)
+        user = self.user
+        print("4.1", user)
+        if user.is_anonymous:
+            print("anonimus part orders all")
+            user=None
+            order = models.Order.objects.create(user=None, price=cart.get_result_price_of_cart)
+        else: order = models.Order.objects.create(user=user, price=cart.get_result_price_of_cart)
         for book_in_cart in cart.books.all():
                 print(book_in_cart.book.title)
                 print(book_in_cart.count)
