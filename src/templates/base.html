@@ -267,7 +267,7 @@
         {% else %}
           <!-- если пользователь не авторизован, отображаем ссылку "Login" -->
           <li>
-            <a href="{% url 'staff:login.html' %}" class="nav-link text-white">
+            <a href="{% url 'staff:login' %}" class="nav-link text-white">
               <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
               Login
             </a>
@@ -280,13 +280,13 @@
           </a>
         </li> {% endcomment %}
         <li>
-          <a href="{% url 'staff:logout.html' %}" class="nav-link text-white">
+          <a href="{% url 'staff:logout' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Logout
           </a>
         </li>
         <li>
-          <a href="{% url 'staff:signup.html' %}" class="nav-link text-white">
+          <a href="{% url 'staff:signup' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
             Reristration
           </a>
