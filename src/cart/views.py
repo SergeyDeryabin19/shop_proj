@@ -20,26 +20,27 @@ from django.http import request
 class CartView(generic.TemplateView):
     model = models.Cart
     template_name = "cart/cart_view.html"
-
+    
+    
+    #Отображения содержимого корзины
     def get_context_data(self, **kwargs):
         pk = self.request.session.get("cart_id")
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         context = super().get_context_data(**kwargs)
-        # Получаем текущего пользователя
         user = self.request.user
-        # Если пользователь анонимный, то устанавливаем его значение в None
         if user.is_anonymous:
             user = None
             cart, created = models.Cart.objects.get_or_create(pk=pk)
-        # Получаем или создаем корзину пользователя
         else: cart, created = models.Cart.objects.get_or_create(user=user)
         # cart, created = models.Cart.objects.get_or_create(pk=pk)
         print(cart, 'asfasf')
-        # Получаем все товары, находящиеся в корзине
         books_in_cart = cart.books.all()
         context["cart"] = cart
         context["books_in_cart"] = books_in_cart
         return context
     
+    
+    #Отображение всех заказов, если аноним, заказ из сессии
     def orders_all(request):
         order_id=request.session['order_id']
         print("order id", order_id)
@@ -59,6 +60,9 @@ class CartView(generic.TemplateView):
 class CartUpdateView(generic.DetailView):
     model = models.Cart
     template_name = "cart/cart_view.html"
+     
+     
+    #Обновление количества книг
     def update_cart(request, cart_id, item_id):
         # if request.method == 'POST':
             print("1", cart_id)
@@ -73,7 +77,9 @@ class CartUpdateView(generic.DetailView):
             book.save()
         # return redirect('cart:cart_view')
             return redirect('cart:cart_view')
-    
+        
+        
+    #Удаление книги из корзины
     def delete_book(request, cart_id, item_id):
         cart = models.Cart.objects.get(pk=cart_id)
         print("2,1", cart)
@@ -82,6 +88,8 @@ class CartUpdateView(generic.DetailView):
         item.delete()
         return redirect('cart:cart_view')
     
+    
+    #Создание заказа
     def create_order(self, cart_id):
         order_id = self.session.get('order_id')
         print(order_id)
@@ -112,14 +120,9 @@ class CartUpdateView(generic.DetailView):
         # cart.clear_cart()
         # self.session.pop('cart_id', None)
         return redirect('cart:cart_view')
-    
-    
-    
-
-    
-
-    
-    
+ 
+     
+# Добавление книги в корзину    
 class AddBookToCart(generic.DetailView):
     def get(self, request, *args, **kwargs):
         order_id = request.session.get('order_id')
@@ -161,13 +164,13 @@ class AddBookToCart(generic.DetailView):
         }))
 
 
-class OrderView(generic.ListView):
-    model = models.Order
-    template_name = "cart:order_view"
-    def create_order(self, request, cart_id):
-        cart = models.Cart.objects.get(pk=cart_id)
-        order = models.Order.objects.create(user=cart.user, total_price=cart.get_total_price())
-        return redirect("cart:order_view")
+# class OrderView(generic.ListView):
+#     model = models.Order
+#     template_name = "cart:order_view"
+#     def create_order(self, request, cart_id):
+#         cart = models.Cart.objects.get(pk=cart_id)
+#         order = models.Order.objects.create(user=cart.user, total_price=cart.get_total_price())
+#         return redirect("cart:order_view")
 
 
 

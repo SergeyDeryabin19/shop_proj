@@ -27,6 +27,7 @@ urlpatterns = [
     path('hp/', include('homepage.urls'), name='hp'),
     path('cart/', include('cart.urls'), name='cart'),
     path('book/', include('book.urls'), name='book'),
+    path('profile/', include('user_profile.urls'), name='profile'),
     path('staff/', include('staff.urls'), name='staff'),
     path('success', views.success_page, name='success.html'),
     path('oh_no_problem', views.Oh_no_problem.as_view(), name='oh_no_problem.html'),
