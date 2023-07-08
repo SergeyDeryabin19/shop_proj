@@ -80,7 +80,18 @@ class CartUpdateView(generic.DetailView):
             book.save()
         # return redirect('cart:cart_view')
             return redirect('cart:cart_view')
-        
+    
+    
+    def update_phone(request, item_id):
+        pk = request.session.get("cart_id")
+        print("CARD ID", item_id)
+        phone_number = request.POST.get('phone')
+        print(phone_number)
+        cart = models.Cart.objects.get(pk=pk)
+        cart.phone=phone_number
+        cart.save()
+        return redirect('cart:cart_view')  
+       
         
     #Удаление книги из корзины
     def delete_book(request, cart_id, item_id):

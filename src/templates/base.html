@@ -118,6 +118,18 @@
    
 
     }
+    button[type="submit"] {
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+  }
       
 
 
@@ -221,7 +233,7 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Sidebar</span>
+        <span class="fs-4">BookFan</span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -240,25 +252,25 @@
         <li>
           <a href="{% url 'directories:view_author.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Authors
+            Авторы
           </a>
         </li>
         <li>
           <a href="{% url 'directories:view_genres.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Genres
+            Жанры
           </a>
         </li>
         <li>
           <a href="{% url 'directories:view_series.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Series
+            Серия
           </a>
         </li>
         <li>
           <a href="{% url 'directories:view_publishing.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Publishing
+            Издательство
           </a>
         </li>
         {% if user.is_authenticated %}
@@ -267,7 +279,7 @@
           <li>
             <span class="nav-link text-success">
               <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#check2"></use></svg>
-              Already login
+              Вы в системе
             </span>
           </li>
         {% else %}
@@ -275,7 +287,7 @@
           <li>
             <a href="{% url 'staff:login' %}" class="nav-link text-white">
               <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-              Login
+              Войти
             </a>
           </li>
         {% endif %}
@@ -288,25 +300,25 @@
         <li>
           <a href="{% url 'staff:logout' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Logout
+            Выйти
           </a>
         </li>
         <li>
           <a href="{% url 'staff:signup' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Reristration
+            Регистрация
           </a>
         </li>
         <li>
           <a href="{% url 'book:book_view_all.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Books
+            Книги
           </a>
         </li>
         <li>
           <a href="{% url 'book:book_add.html' %}" class="nav-link text-white">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Add book
+            Добавить книгу
           </a>
         </li>
         {% if user.is_authenticated %}
@@ -317,7 +329,7 @@
             {% comment %} <a href="{% url 'cart:cart_view.html' cart_id=request.cart_id %}" class="nav-link text-white"> {% endcomment %}
             <a href="{% url 'cart:cart_view' %}" class="nav-link text-white">
               <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-              Your Cart( Login to start )
+              Корзина
             </a>
           </li>
         {% else %}
@@ -326,7 +338,7 @@
             {% comment %} <a href="{% url 'cart:cart_view.html' cart_id=request.cart_id %}" class="nav-link text-white"> {% endcomment %}
             <a href="{% url 'cart:cart_view' %}" class="nav-link text-white">
               <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-              Your Cart( Login to start )
+              Корзина
             </a>
           </li>
         {% endif %}

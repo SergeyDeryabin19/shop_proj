@@ -22,7 +22,7 @@ class CustomerProfile(models.Model):
     first_profile_name = models.CharField(max_length=100, null=True, blank=True)
     last_profile_name = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=15, null=True, blank=True)
-    group = models.ForeignKey(Group, on_delete=models.PROTECT, null=True, blank=True)
+    group = models.ForeignKey(Group, on_delete=models.PROTECT, null=True, blank=True, default="Customers")
     address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, blank=True)
     additional_info = models.TextField(null=True, blank=True)
     

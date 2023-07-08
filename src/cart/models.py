@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from book.models import Book
+from user_profile.models import CustomerProfile
 
 # Create your models here.
 
@@ -47,6 +48,12 @@ class Cart(models.Model):
         auto_now=True
     )
     
+    phone = models.CharField(
+        max_length=15, 
+        null=True, 
+        blank=True, 
+        default=None
+    )
     
     #  Сумарное количество книг в корзине
     @property

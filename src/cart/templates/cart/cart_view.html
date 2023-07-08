@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>Cart for {{ user }} </h1>
+<h1>Корзина пользователя {{ user }}, Индентификатор корзины : {{ cart.id }}  </h1>
     <table >
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th> 
-                <th>Action 1</th>
-                <th>Action 2</th>
+                <th>Название   </th>
+                <th>Цена   </th>
+                <th>Количество   </th>
+                <th>Цена 2   </th> 
+                <th> </th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
@@ -39,11 +39,24 @@
         <tr>
             <th>Total cart count:</th>
             <td>{{ cart.get_total_count_of_cart }}</td></tr>
+
         <tr>
             <th>Total cart price:</th>
             <td>{{ cart.get_result_price_of_cart }}</td></tr>
+            
+        
+        <tr>
+            <th>Phone number to contact:</th>
+            <td>{{ cart.phone }}</td></tr>
     </table>
-    
+    {% if user.is_anonymous %}
+    <form action="{% url 'cart:update_phone' item_id=cart.id %}" method="POST">
+        {% csrf_token %}
+        <label for="phone">Введите номер телефона:</label>
+        <input type="tel" name="phone">
+        <button type="submit">Обновить номер телефона</button>
+    </form>
+    {% endif %}
     
     <form action="{% url 'cart:order_view' cart_id=cart.id %}" method="POST">
         {% csrf_token %}
