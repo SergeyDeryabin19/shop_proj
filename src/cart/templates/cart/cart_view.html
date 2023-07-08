@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>Cart</h1>
-    <table>
+<h1>Cart for {{ user }} </h1>
+    <table >
         <thead>
             <tr>
                 <th>Title</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Subtotal</th>
-                <th>Book id:</th>
+                <th>Subtotal</th> 
+                <th>Action 1</th>
+                <th>Action 2</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
             <td>{{ book.book.title }}</td>
             <td>{{ book.book.price }}</td>
             <td><input type="number" name="count" value="{{ book.count }}" min="1"></td>
+            <td>{{ book.calculate_total_price }}</td>
             <input type="hidden" name="cart_id" value="{{ cart.id }}">
             <input type="hidden" name="item_id" value="{{ book.id }}">
             <td><button type="submit">Update</button></td></form>
@@ -30,19 +32,32 @@
             <td><button type="submit">Delete</button></td></tr></form>
         {% endfor %}
 
-        </tbody>
+        </tbody><br>
     </table>
-    <p>Total count:{{ cart.get_total_count_of_cart }} </p><br>
-    <p>Total: {{ cart.get_result_price_of_cart }}</p><br>
-    <p>Cart id: {{ cart.id }} </p>
+
+    <table>
+        <tr>
+            <th>Total cart count:</th>
+            <td>{{ cart.get_total_count_of_cart }}</td></tr>
+        <tr>
+            <th>Total cart price:</th>
+            <td>{{ cart.get_result_price_of_cart }}</td></tr>
+    </table>
+    
+    
     <form action="{% url 'cart:order_view' cart_id=cart.id %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="cart_id" value="{{ cart.id }}">
     <button type="submit">Submit order</button></form>
-    <form action="{% url 'cart:orders_all' %}" method="GET">
+    {% if user.is_authenticated %}
+      {% csrf_token %}
+      <form action="{% url 'cart:orders_all' %}" method="GET">
         {% csrf_token %}
         <input type="hidden" name="cart_id" value="{{ cart.id }}">
-    <button type="submit">View all orders</button></form>
+        <button type="submit">View all orders</button></form>
+      
+      {% endif %}
+    
     
     
 {% endblock %}

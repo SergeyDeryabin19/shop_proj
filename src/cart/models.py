@@ -17,11 +17,9 @@ class BookInCart(models.Model):
     count = models.PositiveIntegerField(
         default=1
     ) 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     Cart.total_count = self.cart.get_total_count_of_cart()
-    #     self.cart.total_price = self.cart.get_cart_price()
-    #     self.cart.save()
+    
+    def calculate_total_price(book_in_cart):
+        return book_in_cart.count * book_in_cart.book.price 
     
 #Модель(вторая ччасть корзины), в ней определенный пользователь которому присвоена определенная корзина
 class Cart(models.Model):
@@ -61,12 +59,20 @@ class Cart(models.Model):
         return total_price
     
     # Подсчет стоимости товарной позиции при изменении количества
+    @property
     def update_count(self, item_id, count):
         book_in_cart = self.books.get(id=item_id)
         book_in_cart.count = count
         book_in_cart.save()
     
+    @property
+    def get_total_count_of_cart(self):
+        total_count = 0
+        for book_in_cart in self.books.all():
+            total_count += book_in_cart.count
+        return total_count
     # Очищает корзину при оформлении заказа
+    @property
     def clear_cart(self):
         self.books.clear()
         return ...

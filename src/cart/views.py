@@ -9,6 +9,7 @@ from . import models
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import request
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -37,6 +38,8 @@ class CartView(generic.TemplateView):
         books_in_cart = cart.books.all()
         context["cart"] = cart
         context["books_in_cart"] = books_in_cart
+        # total_count=cart.get_total_count_of_cart
+        # print(total_count)
         return context
     
     
@@ -90,6 +93,7 @@ class CartUpdateView(generic.DetailView):
     
     
     #Создание заказа
+    
     def create_order(self, cart_id):
         order_id = self.session.get('order_id')
         print(order_id)
@@ -105,7 +109,7 @@ class CartUpdateView(generic.DetailView):
                 print(book_in_cart.book.title)
                 print(book_in_cart.count)
                 order.books.add(book_in_cart)
-                cart.clear_cart()
+                cart.clear_cart
         self.session['order_id'] = order.pk
         print("order id", self.session['order_id'])
         # print("3.1", models.Cart.objects.get(pk=cart_id))
@@ -119,7 +123,7 @@ class CartUpdateView(generic.DetailView):
         # print(self.session['order_id'])
         # cart.clear_cart()
         # self.session.pop('cart_id', None)
-        return redirect('cart:cart_view')
+        return redirect('book:book_view_all.html')
  
      
 # Добавление книги в корзину    

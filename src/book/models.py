@@ -2,6 +2,7 @@ from django.db import models
 from django.db import models
 from directories.models import Author, Genres, Series, Publishing
 from django.urls import reverse_lazy
+from django.urls import reverse
 
 # Create your models here.
 
@@ -153,5 +154,8 @@ class Book(models.Model):
     def __str__(self) -> str:
         return self.title
     
+    # def get_absolute_url(self):
+    #     return reverse_lazy('hp:success.html')
+    
     def get_absolute_url(self):
-        return reverse_lazy('hp:success.html')
+        return reverse('book:book_detail.html', args=[str(self.id)])
