@@ -13,7 +13,7 @@ class BookListView(generic.ListView):
 class BookCreateView(generic.CreateView):
     model = models.Book
     template_name = 'book/book_add.html'
-    success_url = reverse_lazy('/success')
+    success_url = reverse_lazy('book:book_view_all.html')
     fields = ['title', 'cover_image', 'price', 'authors',
               'series','genres', 'publication_year', 'pages', 'binding',
               'format', 'isbn', 'weight', 'age_limit',

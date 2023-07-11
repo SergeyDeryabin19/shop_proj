@@ -20,7 +20,7 @@
             <tr>
             <td>{{ book.book.title }}</td>
             <td>{{ book.book.price }}</td>
-            <td><input type="number" name="count" value="{{ book.count }}" min="1"></td>
+            <td><input type="number" name="count" value="{{ book.count }}" min="1" max="{{  book.book.quantity_available  }}"></td>
             <td>{{ book.calculate_total_price }}</td>
             <input type="hidden" name="cart_id" value="{{ cart.id }}">
             <input type="hidden" name="item_id" value="{{ book.id }}">

@@ -9,9 +9,10 @@
       <div class="col-md-8">
         <h1 class="mb-3">{{ object.title }}</h1>
         <div class="float-right">
+          {% if object.is_active %}
             <a href="{% url 'cart:book_add_to_cart.html' pk=object.pk %}">
-            <button class="btn btn-primary float-right" style="right: 0;">Добавить в корзину</button>
-        </a>
+            <button class="btn btn-primary float-right" style="right: 0;">Добавить в корзину</button></a>
+          {% else %}В данный момент книжка нет {% endif %}
         </div>
         <table class="table">
           <tbody>
@@ -61,7 +62,7 @@
             </tr>
             <tr>
               <th scope="row">Наличие на складе</th>
-              <td>{% if object.is_available %}Есть в наличии{% else %}Нет в наличии{% endif %}</td>
+              <td>{% if object.is_active %}Есть в наличии {{ object.quantity_available }} шт.{% else %}Нет в наличии{% endif %}</td>
             </tr>
             <tr>
               <th scope="row">Цена</th>

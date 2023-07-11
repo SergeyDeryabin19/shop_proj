@@ -28,6 +28,7 @@ class CartView(generic.TemplateView):
         pk = self.request.session.get("cart_id")
         print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         context = super().get_context_data(**kwargs)
+        print(context)
         user = self.request.user
         if user.is_anonymous:
             user = None
@@ -35,7 +36,14 @@ class CartView(generic.TemplateView):
         else: cart, created = models.Cart.objects.get_or_create(user=user)
         # cart, created = models.Cart.objects.get_or_create(pk=pk)
         print(cart, 'asfasf')
+        self.request.session['cart_id'] = cart.pk
+        print("Cart pk is ", cart.pk)
         books_in_cart = cart.books.all()
+        # print("print title", books_in_cart.book.title)
+        for book in books_in_cart:
+            print(book.book.quantity_available)
+        # print(cart.books.book.quantity_available)
+        # print(books_in_cart.book.title)
         context["cart"] = cart
         context["books_in_cart"] = books_in_cart
         # total_count=cart.get_total_count_of_cart
@@ -45,11 +53,11 @@ class CartView(generic.TemplateView):
     
     #Отображение всех заказов, если аноним, заказ из сессии
     def orders_all(request):
-        order_id=request.session['order_id']
-        print("order id", order_id)
+       
         user = request.user
         print("4.1", user)
         if user.is_anonymous:
+            order_id=request.session['order_id']
             print("anonimus part orders all")
             user=None
             orders = models.Order.objects.filter(pk=order_id)
@@ -76,17 +84,19 @@ class CartUpdateView(generic.DetailView):
             count = int(request.POST.get('count'))
             print("4", int(request.POST.get('count')))
             book = cart.books.get(id=book_id)
+            print(book.book.quantity_available)
             book.count = count
             book.save()
         # return redirect('cart:cart_view')
             return redirect('cart:cart_view')
     
-    
+    # Добавление номера телефона в корзину если аноним
     def update_phone(request, item_id):
         pk = request.session.get("cart_id")
         print("CARD ID", item_id)
         phone_number = request.POST.get('phone')
         print(phone_number)
+        # cart, created = models.Cart.objects.get_or_create(pk=pk)
         cart = models.Cart.objects.get(pk=pk)
         cart.phone=phone_number
         cart.save()
@@ -117,8 +127,19 @@ class CartUpdateView(generic.DetailView):
             order = models.Order.objects.create(user=None, price=cart.get_result_price_of_cart)
         else: order = models.Order.objects.create(user=user, price=cart.get_result_price_of_cart)
         for book_in_cart in cart.books.all():
-                print(book_in_cart.book.title)
-                print(book_in_cart.count)
+                print("title", book_in_cart.book.title)
+                print("ava quant", book_in_cart.book.quantity_available)
+                print("count in order", book_in_cart.count)
+                book_in_cart.book.quantity_available -= book_in_cart.count
+                # book_in_cart.book.save()
+                print(book_in_cart.book.is_active)
+                if book_in_cart.book.quantity_available == 0:
+                    book_in_cart.book.is_active = False
+                print(book_in_cart.book.is_active)
+                print("title 2", book_in_cart.book.title)
+                print("ava quant 2", book_in_cart.book.quantity_available)
+                print("count in order 2", book_in_cart.count)
+                book_in_cart.book.save()
                 order.books.add(book_in_cart)
                 cart.clear_cart
         self.session['order_id'] = order.pk
