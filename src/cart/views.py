@@ -35,7 +35,7 @@ class CartView(generic.TemplateView):
             user = None
             cart, created = models.Cart.objects.get_or_create(pk=pk)
         elif user.is_authenticated:
-            profile = models.CustomerProfile.objects.get(user=user)
+            profile = models.CustomerProfile.objects.get_or_create(user=user)
             cart, created = models.Cart.objects.get_or_create(user=user)
             print("Phone", profile.phone)
             print("Cart comment", cart.cart_comment)
