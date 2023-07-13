@@ -55,6 +55,14 @@ class Cart(models.Model):
         default=None
     )
     
+    cart_comment = models.CharField(
+        max_length=255,
+        verbose_name="Cart comment",
+        null=True, 
+        blank=True,
+        default=None
+    )
+    
     #  Сумарное количество книг в корзине
     @property
     def get_result_price_of_cart(self):
@@ -137,6 +145,14 @@ class Order(models.Model):
         verbose_name="Updated",
         auto_now_add=False,
         auto_now=True
+    )
+    
+    cart_comment_in_order = models.CharField(
+        max_length=255,
+        verbose_name="Cart comment in order",
+        null=True, 
+        blank=True,
+        default=None
     )
 
     def str(self):

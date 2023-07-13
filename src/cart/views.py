@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import request
 from django.contrib.auth.decorators import login_required
+from user_profile.models import CustomerProfile
 
 # Create your views here.
 
@@ -33,7 +34,13 @@ class CartView(generic.TemplateView):
         if user.is_anonymous:
             user = None
             cart, created = models.Cart.objects.get_or_create(pk=pk)
-        else: cart, created = models.Cart.objects.get_or_create(user=user)
+        elif user.is_authenticated:
+            profile = models.CustomerProfile.objects.get(user=user)
+            cart, created = models.Cart.objects.get_or_create(user=user)
+            print("Phone", profile.phone)
+            print("Cart comment", cart.cart_comment)
+            cart.phone = profile.phone
+            context["profile"] = profile
         # cart, created = models.Cart.objects.get_or_create(pk=pk)
         print(cart, 'asfasf')
         self.request.session['cart_id'] = cart.pk
@@ -101,6 +108,17 @@ class CartUpdateView(generic.DetailView):
         cart.phone=phone_number
         cart.save()
         return redirect('cart:cart_view')  
+    
+    def make_comment(request, item_id):
+        pk = request.session.get("cart_id")
+        print("CARD ID", item_id)
+        comment = request.POST.get('cart_comment')
+        print("heehehhehheheheheh", comment)
+        # cart, created = models.Cart.objects.get_or_create(pk=pk)
+        cart = models.Cart.objects.get(pk=pk)
+        cart.cart_comment=comment
+        cart.save()
+        return redirect('cart:cart_view')  
        
         
     #Удаление книги из корзины
@@ -136,12 +154,18 @@ class CartUpdateView(generic.DetailView):
                 if book_in_cart.book.quantity_available == 0:
                     book_in_cart.book.is_active = False
                 print(book_in_cart.book.is_active)
+                print("CAART COMENT", cart.cart_comment)
                 print("title 2", book_in_cart.book.title)
                 print("ava quant 2", book_in_cart.book.quantity_available)
                 print("count in order 2", book_in_cart.count)
                 book_in_cart.book.save()
                 order.books.add(book_in_cart)
                 cart.clear_cart
+        print("CAART COMENT", cart.cart_comment)
+        order.cart_comment_in_order = cart.cart_comment
+        order.save()
+        cart.cart_comment = None
+        cart.save()
         self.session['order_id'] = order.pk
         print("order id", self.session['order_id'])
         # print("3.1", models.Cart.objects.get(pk=cart_id))
