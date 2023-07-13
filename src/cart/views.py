@@ -27,9 +27,7 @@ class CartView(generic.TemplateView):
     #Отображения содержимого корзины
     def get_context_data(self, **kwargs):
         pk = self.request.session.get("cart_id")
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         context = super().get_context_data(**kwargs)
-        print(context)
         user = self.request.user
         if user.is_anonymous:
             user = None
@@ -37,24 +35,14 @@ class CartView(generic.TemplateView):
         elif user.is_authenticated:
             profile = models.CustomerProfile.objects.get_or_create(user=user)
             cart, created = models.Cart.objects.get_or_create(user=user)
-            print("Phone", profile.phone)
-            print("Cart comment", cart.cart_comment)
             cart.phone = profile.phone
             context["profile"] = profile
-        # cart, created = models.Cart.objects.get_or_create(pk=pk)
-        print(cart, 'asfasf')
         self.request.session['cart_id'] = cart.pk
-        print("Cart pk is ", cart.pk)
         books_in_cart = cart.books.all()
-        # print("print title", books_in_cart.book.title)
         for book in books_in_cart:
             print(book.book.quantity_available)
-        # print(cart.books.book.quantity_available)
-        # print(books_in_cart.book.title)
         context["cart"] = cart
         context["books_in_cart"] = books_in_cart
-        # total_count=cart.get_total_count_of_cart
-        # print(total_count)
         return context
     
     
